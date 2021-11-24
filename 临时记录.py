@@ -18,7 +18,12 @@ meta_min_df['ReleaseDate']=meta_min_df['ReleaseDate'].fillna('1970-01-01')
 
 
 # 时间序列转换
-time_x=pd.to_datetime(meta_min_df['ReleaseDate'][10])-pd.to_datetime(meta_min_df['AddDate'][10])
+#time_x=pd.to_datetime(meta_min_df['ReleaseDate'][10])-pd.to_datetime(meta_min_df['AddDate'][10])
+meta_df['SampleCollectionDate']=pd.to_datetime(meta_df['SampleCollectionDate'])
+# 重新输出字符串格式
+meta_df['SampleCollectionDate']=meta_df['SampleCollectionDate'].dt.strftime('%Y')
+
+
 
 #  秒数转days
 time_x/np.timedelta64(1, 'D')
