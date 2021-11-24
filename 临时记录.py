@@ -8,3 +8,18 @@ v_df
 
 # 计算添加一列，添加方法是后面按照列(axis=1)连接，后续补充任意位置插入的方法
 new_stat_df=pd.concat([new_stat_df,pd.Series(new_stat_df['v_len']/new_stat_df['r_len'],name="prec")],axis=1)
+
+
+# NA 替换
+meta_min_df['SampleCollectionDate']=meta_min_df['SampleCollectionDate'].fillna('1970-01-01')
+meta_min_df['AddDate']=meta_min_df['AddDate'].fillna('1970-01-01')
+meta_min_df['ReleaseDate']=meta_min_df['ReleaseDate'].fillna('1970-01-01')
+#https://www.jianshu.com/p/b5bb71aa7466
+
+
+# 时间序列转换
+time_x=pd.to_datetime(meta_min_df['ReleaseDate'][10])-pd.to_datetime(meta_min_df['AddDate'][10])
+
+#  秒数转days
+time_x/np.timedelta64(1, 'D')
+#https://www.jianshu.com/p/c9c2549bfda1
