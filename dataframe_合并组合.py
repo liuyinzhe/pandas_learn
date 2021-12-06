@@ -14,3 +14,9 @@ merge_df = merge_df.append(b_stat_df.iloc[0:3,:])
 # pd.concat() 默认 axis=0，行叠加，axis=1 ，为列叠加
 # append的参数即可以是一个DataFrame，也可以是一个数组，这种情况下可以合并多个DataFrame
 merge_df = pd.concat([df, df2])
+
+
+
+#### 重要，合并后要将index 重置下，从新从0 数，否则一些智障封包会报错
+# ValueError: cannot reindex from a duplicate axis
+df.reset_index()
