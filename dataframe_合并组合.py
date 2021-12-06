@@ -17,6 +17,6 @@ merge_df = pd.concat([df, df2])
 
 
 
-#### 重要，合并后要将index 重置下，从新从0 数，否则一些智障封包会报错
+#### 重要，合并后要将index 重置下，从新从0 数，否则一些制仗封包会报错，如sns
 # ValueError: cannot reindex from a duplicate axis
 df.reset_index()
