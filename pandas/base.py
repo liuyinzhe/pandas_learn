@@ -20,6 +20,8 @@ dataframe_df = pd.read_csv(input_path,encoding="utf-8",sep='\t',index_col=None)
 # for column_index in dataframe_df:
 #     print(column_index)
 
+# 无表头文件，添加表头
+df = pd.read_csv('data.csv', sep='\t',header=None, names=['year','x1','x2','x3'])
 
 # 转置
 # df.T
