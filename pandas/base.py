@@ -245,6 +245,49 @@ def func(x):
 province[province["省份"].apply(func)]
 #原文链接：https://blog.csdn.net/p1306252/article/details/114879951
 
+'''
+DataFrame.apply(
+            func:function
+            axis:{0 or ‘index’, 1 or ‘columns’}, default 0 
+            raw:bool, default False
+            result_type:{‘expand’, ‘reduce’, ‘broadcast’, None}, default None
+            args:tuple) Positional arguments to pass to func in addition to the array/series.
+            **kwargs Additional keyword arguments to pass as keywords arguments to func.
+
+Returns:Series or DataFrame
+Result of applying func along the given axis of the DataFrame.
+
+DataFrame.apply(self, func, axis=0, raw=False, result_type=None, args=(), **kwds）
+func 代表的是传入的函数或 lambda 表达式；
+axis 参数可提供的有两个，该参数默认为0/列
+0 或者 index ，表示函数处理的是每一列；
+1 或 columns ，表示处理的是每一行;
+raw ；bool 类型，默认为 False;
+False ，表示把每一行或列作为 Series 传入函数中；
+True，表示接受的是 ndarray 数据类型；
+apply() 最后的是经过函数处理，数据以 Series 或 DataFrame 格式返回。
+                        
+原文链接：https://blog.csdn.net/weixin_60535956/article/details/136486200
+
+
+'''
+target_lst = ['广东', '广西', '福建', '福建省']
+def func(x,lst):
+    if ';' in x:
+        record = re.split(";",x.strip())
+        for item in record:
+            if item in lst:
+                return True
+    else:
+        if x in lst:
+            return True
+        else:
+            return False
+    # for 循环没找到，则返回 False
+    return(False)
+province[province["省份"].apply(func,args=(target_lst,))]
+
+
 #3.df.duplicated() 重复内容筛选
 
 df[df.duplicated(subset=["one"],keep="last")]#返回除最后一次出现的重复值
