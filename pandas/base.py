@@ -87,3 +87,95 @@ data.loc[:, 'd'] = 0
 
 # 保存, sep 分隔符，encoding 编码，index 是否保存行索引，header 是否保存列名，columns 指定保存的列
 dataframe_df.to_csv("test.csv", sep='\t',encoding="utf-8", index=False, header=True , columns=["animal", "age"])
+
+
+################################# 字典转为dataframe  #########################
+# 代码来自  https://blog.csdn.net/LiuRuiaby35646/article/details/138079363
+# 1.pd.DataFrame()
+# 字典列表，每个字典代表一行数据
+data_list_of_dicts = [
+    {'Company': 'Company A', 'Employees': 120, 'Revenue': 1000},
+    {'Company': 'Company B', 'Employees': 80, 'Revenue': 800},
+    {'Company': 'Company C', 'Employees': 300, 'Revenue': 1500}
+]
+
+# 直接将字典列表转换为DataFrame
+df = pd.DataFrame(data_list_of_dicts)
+
+# 输出
+'''
+     Company  Employees  Revenue
+0  Company A        120     1000
+1  Company B         80      800
+2  Company C        300     1500
+'''
+
+# 2.pd.DataFrame.from_dict()
+# (1) orient='columns' 默认
+data_dict = {
+    'Company': ['A', 'B', 'C'],
+    'Revenue': [100, 150, 200],
+    'Employees': [50, 60, 70]
+}
+
+df = pd.DataFrame.from_dict(data_dict)
+print(df)
+'''
+  Company  Revenue  Employees
+0       A      100         50
+1       B      150         60
+2       C      200         70
+
+'''
+# (2) orient='index'
+data_dict = {
+    'row1': {'Company': 'A', 'Revenue': 100, 'Employees': 50},
+    'row2': {'Company': 'B', 'Revenue': 150, 'Employees': 60},
+    'row3': {'Company': 'C', 'Revenue': 200, 'Employees': 70}
+}
+
+df = pd.DataFrame.from_dict(data_dict, orient='index')
+print(df)
+'''
+      Company  Revenue  Employees
+row1       A      100         50
+row2       B      150         60
+row3       C      200         70
+'''
+
+#4.concat()方法将字典转换为 DataFrame 行   根据相同列名合并
+
+data_dict = {'Column1': 'Value1', 'Column2': 'Value2', 'Column3': 'Value3'}
+
+dict_df = pd.DataFrame([data_dict])
+
+'''
+        Column1	        Column2	       Column3
+0	    Value1	         Value2     	Value3
+'''
+# Now, create an example existing DataFrame to concatenate with.
+existing_df = pd.DataFrame({
+    'Column1': ['ExistingValue1', 'ExistingValue2'],
+    'Column2': ['ExistingValue3', 'ExistingValue4'],
+    'Column3': ['ExistingValue5', 'ExistingValue6']
+})
+
+'''
+        Column1	        Column2	       Column3
+0	ExistingValue1	ExistingValue3	ExistingValue5
+1	ExistingValue2	ExistingValue4	ExistingValue6
+'''
+
+concatenated_df = pd.concat([existing_df, dict_df], ignore_index=True)
+
+# Display the concatenated DataFrame
+print(concatenated_df)
+'''
+        Column1	        Column2	       Column3
+0	ExistingValue1	ExistingValue3	ExistingValue5
+1	ExistingValue2	ExistingValue4	ExistingValue6
+2	    Value1	         Value2     	Value3
+'''
+# 代码来自  https://blog.csdn.net/LiuRuiaby35646/article/details/138079363
+################################# 字典转为dataframe  #########################
+
