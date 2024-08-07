@@ -179,3 +179,139 @@ print(concatenated_df)
 # 代码来自  https://blog.csdn.net/LiuRuiaby35646/article/details/138079363
 ################################# 字典转为dataframe  #########################
 
+
+##############################  条件筛选  #############################
+
+
+#1.单条件筛选
+
+df.loc[df['Item'] == 'Milk']
+df[df["sh"]>5]
+df[df["sh"].map(lambda x:x>5)]
+# 字符串切片，判断
+df[df["date"].map(lambda x:x[0:4])=="2019"]
+
+#2.多条件筛选
+df.loc[(df['Price'] < 2) | (df['Discount'] > 0)]
+
+df.loc[(df['Price'] > 3) | ((df['Discount'] > 0) & (df['Unit'] == 'Dozen'))]
+
+# 使用isin()方法筛选
+df.loc[df['Item'].isin(['Milk', 'Bread'])]
+df[(df['级别'].isin (['一线','二线']))]
+df[((df['级别'].isin (['一线','二线']))&(df['是否沿海'].isin(['沿海'])))]
+
+# 使用between()方法筛选
+df.loc[df['Price'].between(2, 3)]
+# 3.字符串条件筛选
+#(1) 使用str.contains()方法筛选
+'''
+.str.contains()中还可以设置正则化筛选逻辑。
+case=True：使用case指定区分大小写
+na=True：就表示把有NAN的转换为布尔值True
+flags=re.IGNORECASE：标志传递到re模块，例如re.IGNORECASE
+regex=True：regex ：如果为True，则假定第一个字符串是正则表达式，否则还是字符串
+'''
+df.loc[df['Item'].str.contains('Bread')]
+# 筛选字符串 ，正则表达式
+df.loc[df['Name'].str.contains('Mrs|Lily'),:].head()
+# 筛选含有“一线”或“二线”的行
+df[df['级别'].str.contains("一线|二线",na=False)]
+# 过滤去掉含有“一线”或“二线”的行
+df[~df['级别'].str.contains("一线|二线",na=False)]
+
+#(2) 使用str.startswith()方法筛选
+df.loc[df['Item'].str.startswith('B')]
+#(3) 使用str.endswith()方法筛选
+df.loc[df['Item'].str.endswith('s')]
+#(4) 使用str.match()方法筛选
+df.loc[df['Item'].str.match('B.*s')]
+#(5) 使用str.len()方法筛选
+df[df['诗人'].str.len() <= 2]
+#原文链接 https://blog.csdn.net/qq_41314882/article/details/134872056
+#(6) df.notna() df.isna() 筛选空/非空
+df[df['age'].notna()]
+df[df['age'].isna()]
+#(7) 正则匹配
+
+import re
+province = pd.DataFrame(['广东', '广西', '福建', '福建省'], columns=['省份'])
+#自定义函数，如果包含“广”字，则返回True,否则返回False
+def func(x):
+    if re.search(".*广.*",x):
+        return(True)
+    else:
+        return(False)
+province[province["省份"].apply(func)]
+#原文链接：https://blog.csdn.net/p1306252/article/details/114879951
+
+#3.df.duplicated() 重复内容筛选
+
+df[df.duplicated(subset=["one"],keep="last")]#返回除最后一次出现的重复值
+df[df.duplicated(subset=["one"],keep=False)]#返回所有重复值
+
+#4.df.filter() 筛选
+'''
+items：固定列名
+regex：正则表达式
+like：以及模糊查询
+axis：控制是行index或列columns的查询
+'''
+# 数据集
+df = pd.DataFrame(np.array(([1, 2, 3], [4, 5, 6])),
+                  index=['mouse', 'rabbit'],
+                  columns=['one', 'two', 'three'])
+df
+'''
+        one  two  three
+mouse     1    2      3
+rabbit    4    5      6
+'''
+# 按名称选择列
+df.filter(items=['one', 'three'])
+'''
+         one  three
+mouse     1      3
+rabbit    4      6
+'''
+# 按正则表达式选择列
+df.filter(regex='e$', axis=1)
+'''
+         one  three
+mouse     1      3
+rabbit    4      6
+'''
+# 选择包含“bbi”的行
+df.filter(like='bbi', axis=0)
+'''
+         one  two  three
+rabbit    4    5      6
+'''
+
+#5.where/mask
+# where接受的条件需要是布尔类型，如果不满足匹配条件，就被赋值为默认的NaN或其他指定值
+df['quality'] = '' # 额外创建的列，则会成为other的填充列，单条则填充单个条件
+cond1 = df['Sex'] == 'male'
+cond2 = df['Age'] > 25
+ 
+df['quality'].where(cond1 & cond2, other=pd.NA, inplace=True)
+# other 是False时，默认是 NaN填充，也可以额外指定
+# mark 就是 where 的反条件
+
+#6.query
+# 常用方式
+df[df.Age > 25]
+# query方式
+df.query('Age > 25')
+df.query("Name.str.contains('William') & Age > 25")
+df.query('Sex == "male" and Age > 25')
+
+# 参考链接 https://blog.csdn.net/joker_zsl/article/details/119874694
+##############################  条件筛选  #############################
+
+
+############################## 条件判断添加新列 #############################
+
+data['dd_xun'] = data['dd'].apply(lambda x: '上旬' if x<=10 else '中旬' if x<=20 else '下旬')
+# 原文链接: https://blog.csdn.net/arbraham/article/details/106562601
+############################## 条件判断添加新列 #############################
