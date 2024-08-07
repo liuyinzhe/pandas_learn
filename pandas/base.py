@@ -83,3 +83,7 @@ data = pd.concat([data, pd.DataFrame(columns=['d'])], sort=False)
 # loc 方法  指定列名添加一列
 # 固定行，列 data.loc[index, col] = value
 data.loc[:, 'd'] = 0
+
+
+# 保存, sep 分隔符，encoding 编码，index 是否保存行索引，header 是否保存列名，columns 指定保存的列
+dataframe_df.to_csv("test.csv", sep='\t',encoding="utf-8", index=False, header=True , columns=["animal", "age"])
