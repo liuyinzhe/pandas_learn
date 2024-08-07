@@ -21,15 +21,20 @@ dataframe_df = pd.read_csv(input_path,encoding="utf-8",sep='\t',index_col=None)
 #     print(column_index)
 
 
-#header=0
-#names=["NO1","NO2","NO3"]
-# usecols=usecols_lst
+# 转置
 # df.T
-# usecols_lst = ['','']
-# multianno_snp_df = pd.read_csv('_multianno.txt',
-#                                sep='\t',encoding='utf-8',usecols=usecols_lst)
 
+# 只读取特定列 
+usecols_lst = ["NO1","NO2","NO3"]
+multianno_snp_df = pd.read_csv('multianno.txt',
+                               sep='\t',encoding='utf-8',usecols=usecols_lst)
 
+# 读取内容全部自定义为字符串类型
+data = pd.read_csv('multianno.txt',sep='\t', dtype=str,na_values="") #na_values 避免缺失值 NaN
+print(data)
+
+# 读取CSV文件，将第一列和第三列转换为整数/浮点，第二列转换为字符串
+data = pd.read_csv('yourfile.csv', dtype={0: int, 2: float, 1: str})
 
 # 按行遍历
 # for index, row in dataframe_df.iterrows():
