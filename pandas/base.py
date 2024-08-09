@@ -358,3 +358,29 @@ df.query('Sex == "male" and Age > 25')
 data['dd_xun'] = data['dd'].apply(lambda x: '上旬' if x<=10 else '中旬' if x<=20 else '下旬')
 # 原文链接: https://blog.csdn.net/arbraham/article/details/106562601
 ############################## 条件判断添加新列 #############################
+
+
+
+################################ pandas 读取 gzip 压缩表格 与 输出压缩表格 ###############################
+def sv_func(x,lst):
+    '''
+    dataframe.apply(func, args=(lst,),axis=0)
+    '''
+    'SRCIN1(0;-)'
+    gene_id = re.sub(r"\(\d{1,};[-+]{1,}\)","",x)
+    if gene_id in lst:
+        return True
+    else:
+        return False
+
+
+df = pd.read_csv('query.tsv.gz',sep='\t',compression='gzip')
+print(df['query.startfeature'].to_list())
+# df.to_csv('query.tsv', index=False)
+TSG_lst=['GPAT2',]
+# 过滤
+TSG_df = df[df["query.startfeature"].apply(sv_func,args=(TSG_lst,))]
+#保存
+TSG_df.to_csv('query2.csv.gz',sep='\t' ,index=False, compression='gzip')
+
+################################ pandas 读取 gzip 压缩表格 与 输出压缩表格 ###############################
