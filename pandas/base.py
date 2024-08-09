@@ -38,6 +38,18 @@ print(data)
 # 读取CSV文件，将第一列和第三列转换为整数/浮点，第二列转换为字符串
 data = pd.read_csv('yourfile.csv', dtype={0: int, 2: float, 1: str})
 
+# 缺失值处理
+data = pd.read_csv('multianno.txt',sep='\t', keep_default_na=False) 
+# keep_default_na参数，这个参数的作用是决定要不要保留默认应该转换的缺失值列表，将这个参数设为False之后同时不定义na_values参数，就可以在读取文件时不将任何值转换为缺失值NaN
+
+# 关闭默认的空值转换为 pd.na
+data = pd.read_csv('multianno.txt',sep='\t', keep_default_na=False) 
+# na_values 默认是 None ,na_values 可指定缺失值
+df = pd.read_csv('file.csv', na_values=['N/A', '-', ''])
+# 如果你想要指定某一列特定的空值，可以传递一个字典给na_values，其键为列名，值为空值列表：
+df = pd.read_csv('file.csv', na_values={'column_name': ['N/A', '-', '']})
+
+
 # 按行遍历
 # for index, row in dataframe_df.iterrows():
 #     print(index) # 输出每行的索引值
