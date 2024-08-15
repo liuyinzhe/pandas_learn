@@ -7,7 +7,7 @@ example_df = pd.read_excel("人工.xlsx",sheet_name='Sheet1',index_col='编号')
 #获取行索引
 print(example_df.index.to_list())
 #获取列索引
-print(rengong_df.keys().to_list())
+print(example_df.keys().to_list())
 
 
 current_path = Path.cwd()
@@ -396,3 +396,19 @@ TSG_df = df[df["query.startfeature"].apply(sv_func,args=(TSG_lst,))]
 TSG_df.to_csv('query2.csv.gz',sep='\t' ,index=False, compression='gzip')
 
 ################################ pandas 读取 gzip 压缩表格 与 输出压缩表格 ###############################
+
+
+################################ dataframe drop删除指定列 #####################################
+
+# 删除指定行
+df.drop('列名', axis=0, inplace=True) # axis=0表示行，inplace=True表示在原数据上进行操作
+# 删除多个指定列
+df.drop(['列名1', '列名2'], axis=1, inplace=True) # axis=1表示列，inplace=True表示在原数据上进行操作
+# 按照位置删除第二列和第三列
+df.drop(df.columns[1:3], axis=1, inplace=True) # axis=1表示列，inplace=True表示在原数据上进行操作
+# 按照位置删除第二行和第三行
+df.drop(df.index[1:3], axis=0, inplace=True) # axis=0表示行，inplace=True表示在原数据上进行操作
+
+
+
+################################ dataframe drop删除指定列 #####################################
