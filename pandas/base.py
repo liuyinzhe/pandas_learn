@@ -189,6 +189,34 @@ print(concatenated_df)
 2	    Value1	         Value2     	Value3
 '''
 # 代码来自  https://blog.csdn.net/LiuRuiaby35646/article/details/138079363
+
+# 长度不同的字典元素 ，转为 dataframe
+
+def nan_fill(dic):
+    '''
+    dic= {
+        'a':[1,2,3],
+        'b':[5,],
+        'c':[4,6,7,8]
+        }
+    '''
+    max_len = max([len(v) for v in dic.values()])
+    for k in dic:
+        lst_len = len(dic[k])
+        if len(dic[k]) < max_len:
+            dic[k] += [pd.NA,]*(max_len-lst_len)
+    return dic
+
+data_dic = {'A': [1, 2],
+        'B': [3, 4, 5],
+        'C': [6, 7, 8, 9, 10]
+        }
+
+new_data_dic = nan_fill(data_dic)
+venn_plot_df = pd.DataFrame(new_data_dic)
+# 不修改 data_dic
+# 通过 orient 设置key 作为行index, 数值转置后，重新设置key,由于是自定义的，key顺序固定
+venn_plot_df = pd.DataFrame(pd.DataFrame.from_dict(data_dic, orient='index').values.T, columns=list(data_dic.keys()))
 ################################# 字典转为dataframe  #########################
 
 
