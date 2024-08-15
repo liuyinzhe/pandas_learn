@@ -400,15 +400,28 @@ TSG_df.to_csv('query2.csv.gz',sep='\t' ,index=False, compression='gzip')
 
 ################################ dataframe drop删除指定列 #####################################
 
+'''
+DataFrame.drop(
+     labels=None,   # labels:要删除的行或列的标签
+     axis=0,        # axis:删除行还是列。0或'index'表示删除行,1或'columns'表示删除列
+     index=None,    # 要删除的行标签
+     columns=None,  # 要删除的列标签
+     level=None,    # 用于多级索引
+     inplace=False, # 是否在原地修改数据。如果为True,则在原DataFrame上进行修改,如果为False,则返回一个新的DataFrame
+     errors='raise' # 如果指定的标签不存在,如何处理。'raise'表示抛出错误,'ignore'表示忽略
+     )
+'''
+
 # 删除指定行
-df.drop('列名', axis=0, inplace=True) # axis=0表示行，inplace=True表示在原数据上进行操作
+df.drop('行索引名', axis=0, inplace=True) # axis=0表示行，inplace=True表示在原数据上进行操作
 # 删除多个指定列
-df.drop(['列名1', '列名2'], axis=1, inplace=True) # axis=1表示列，inplace=True表示在原数据上进行操作
+df.drop(['列索引名1', '列索引名2'], axis=1, inplace=True) # axis=1表示列，inplace=True表示在原数据上进行操作
 # 按照位置删除第二列和第三列
 df.drop(df.columns[1:3], axis=1, inplace=True) # axis=1表示列，inplace=True表示在原数据上进行操作
 # 按照位置删除第二行和第三行
 df.drop(df.index[1:3], axis=0, inplace=True) # axis=0表示行，inplace=True表示在原数据上进行操作
-
-
+# 按照 行index 删除
+df.drop(index=df.index[[1,3,5]])
+df.drop(df.index[[1,3,5]])
 
 ################################ dataframe drop删除指定列 #####################################
