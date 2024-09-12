@@ -453,3 +453,15 @@ df.drop(index=df.index[[1,3,5]])
 df.drop(df.index[[1,3,5]])
 
 ################################ dataframe drop删除指定列 #####################################
+
+################################ dataframe 提取指定列作为新的dataframe #####################################
+new_genes_df = gene_df[['Gene', 'GeneName']].copy()
+
+# 提取指定列作为新的 DataFrame
+df1_new = df1[['Gene', 'GeneName']]
+df2_new = df2[['Gene', 'GeneName']]
+
+# 合并两个 DataFrame
+merged_df = pd.concat([df1_new, df2_new], ignore_index=True)
+
+################################ dataframe 提取指定列作为新的dataframe #####################################
