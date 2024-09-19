@@ -465,3 +465,12 @@ df2_new = df2[['Gene', 'GeneName']]
 merged_df = pd.concat([df1_new, df2_new], ignore_index=True)
 
 ################################ dataframe 提取指定列作为新的dataframe #####################################
+
+
+################################  groupby #################################################
+
+# https://zhuanlan.zhihu.com/p/101284491
+# 计算每一列相同ID的sum总和
+df = pd.read_csv("format.txt",encoding="utf-8",sep='\t',index_col=None)
+new_df = df.groupby('ID',as_index=False).sum()
+new_df.to_csv("format.sum.txt",sep='\t',encoding="utf-8", index=False, header=True)
