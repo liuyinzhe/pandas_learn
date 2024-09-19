@@ -474,3 +474,5 @@ merged_df = pd.concat([df1_new, df2_new], ignore_index=True)
 df = pd.read_csv("format.txt",encoding="utf-8",sep='\t',index_col=None)
 new_df = df.groupby('ID',as_index=False).sum()
 new_df.to_csv("format.sum.txt",sep='\t',encoding="utf-8", index=False, header=True)
+
+################################  groupby #################################################
