@@ -476,3 +476,24 @@ new_df = df.groupby('ID',as_index=False).sum()
 new_df.to_csv("format.sum.txt",sep='\t',encoding="utf-8", index=False, header=True)
 
 ################################  groupby #################################################
+
+################################ 自定义函数  ##################################################
+# 定义转换函数
+def convert2numeric(column,column_names_lst):
+    if column.name in column_names_lst:  # 根据列名指定转换
+        return pd.to_numeric(column, errors='coerce')
+    else:
+        return column
+
+# 空表头文件添加表头
+columns_lst = [  'CNV type', 'CNV region', 'CNV size', 'CNV level',
+            'p_val', 'p_val_2', 'p_val_3', 'p_val_4', 
+            'q0', 'pN', 'dG']
+df = pd.read_csv("input.tsv",sep='\t',header=None,names=columns_lst)
+
+# 'CNV type', 'CNV region', 两列不做处理
+column_names_lst = ['CNV size', 'CNV level', 'p_val', 'p_val_2', 'p_val_3', 'p_val_4', 'q0', 'pN', 'dG']
+# df.apply(errors='coerce')空值则返回 Na
+df = df.apply(convert2numeric,args=(column_names_lst,))
+print(df)
+############################## 自定义函数  ##################################################
