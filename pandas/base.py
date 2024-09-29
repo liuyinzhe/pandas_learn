@@ -497,3 +497,31 @@ column_names_lst = ['CNV size', 'CNV level', 'p_val', 'p_val_2', 'p_val_3', 'p_v
 df = df.apply(convert2numeric,args=(column_names_lst,))
 print(df)
 ############################## 自定义函数  ##################################################
+
+############################## 判断段字符串适合的数字类型  ##################################################
+import pandas as pd
+ 
+def get_numeric_type(s):
+    try:
+        pd.to_numeric(s, downcast='signed')
+        return 'integer' if s.isdigit() else 'float'
+    except ValueError:
+        return 'non-numeric'
+ 
+# 示例数据
+data = ['1', '2.5', 'three', '4e2', '5e-1']
+df = pd.DataFrame({'value': data})
+ 
+# 判断每个字符串最适合转换的数字类型
+df['numeric_type'] = df['value'].apply(get_numeric_type)
+print(df)
+'''
+   value numeric_type
+0      1      integer
+1    2.5        float
+2  three  non-numeric
+3    4e2        float
+4   5e-1        float
+'''
+############################## 判断段字符串适合的数字类型  ##################################################
+
