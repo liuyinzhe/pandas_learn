@@ -525,3 +525,17 @@ print(df)
 '''
 ############################## 判断段字符串适合的数字类型  ##################################################
 
+###################### 创建多个新列，逐行修改每个值  ##################################
+# 创建新的列来存储解析后的分类信息
+new_columns = ['kingdom', 'phylum', 'class', 'order', 'family', 'genus', 'species']
+for col in new_columns:
+    df[col] = None
+
+# 遍历 'taxonomy' 列并使用 taxonomy_parser 函数解析
+for index, row in df.iterrows():
+    if pd.notna(row['taxonomy']):
+        parsed_taxonomy = taxonomy_parser(row['taxonomy'], db_type="Silva")  # 根据实际情况选择数据库类型
+        for i, col in enumerate(new_columns):
+            # print(i, col) 迭代每个 新列名，将每行对应的新列明 单个元素进行修改
+            df.at[index, col] = parsed_taxonomy[i]
+##########################################################################################
