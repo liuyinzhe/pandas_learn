@@ -9,7 +9,9 @@ print(example_df.index.to_list())
 #获取列索引
 print(example_df.keys().to_list())
 
-
+# script_path =Path(__file__)
+# script_dir = Path(script_path).parent
+# print(script_dir)
 current_path = Path.cwd()
 input_path = current_path.joinpath("a.txt")
 
