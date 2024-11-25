@@ -101,8 +101,30 @@ data.loc[:, 'd'] = 0
 
 # 保存, sep 分隔符，encoding 编码，index 是否保存行索引，header 是否保存列名，columns 指定保存的列
 dataframe_df.to_csv("test.csv", sep='\t',encoding="utf-8", index=False, header=True , columns=["animal", "age"])
+#################################  根据指定索引排序  #########################
+import pandas as pd
 
+# 创建 DataFrame
+df = pd.DataFrame({
+    'A': ['a', 'b', 'c'],
+    'B': [1, 2, 3]
+}, index=[0, 1, 2])
 
+# 重新索引行
+df_reindexed = df.reindex(index=[2, 1, 0, 3])
+print(df_reindexed)
+
+# 重新索引列
+df_reindexed_columns = df.reindex(columns=['B', 'A', 'C'])
+print(df_reindexed_columns)
+
+# 填充缺失值
+df_reindexed_fill = df.reindex(index=[2, 1, 0, 3], fill_value=0)
+print(df_reindexed_fill)
+
+DataFrame.reindex 支持两种调用约定：
+#DataFrame.reindex(index=index_labels, columns=column_labels,...)
+#DataFrame.reindex(labels, axis={'index', 'columns'},...)
 ################################# 字典转为dataframe  #########################
 # 代码来自  https://blog.csdn.net/LiuRuiaby35646/article/details/138079363
 # 1.pd.DataFrame()
