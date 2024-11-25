@@ -540,4 +540,19 @@ for index, row in df.iterrows():
         for i, col in enumerate(new_columns):
             # print(i, col) 迭代每个 新列名，将每行对应的新列明 单个元素进行修改
             df.at[index, col] = parsed_taxonomy[i]
+###################### 遍历中，逐行修改每个值at  ##################################
+import pandas as pd
+
+# 创建一个示例 DataFrame
+data = {'A': [1, 2, 3, 4, 5],
+        'B': [6, 7, 8, 9, 10]}
+df = pd.DataFrame(data)
+
+# 遍历 DataFrame 的行
+for index, row in df.iterrows():
+    # 根据行中数值修改列 'A' 的值
+    if row['A'] > 3:
+        df.at[index, 'A'] = row['A'] * 2
+
+print(df)
 ##########################################################################################
