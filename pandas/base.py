@@ -260,6 +260,41 @@ df.loc[(df['Price'] < 2) | (df['Discount'] > 0)]
 
 df.loc[(df['Price'] > 3) | ((df['Discount'] > 0) & (df['Unit'] == 'Dozen'))]
 
+####################### 多条件 apply ##########################
+# 创建示例DataFrame
+df = pd.DataFrame({
+    'A': [1, 2, 3, 4, 5],
+    'B': [10, 20, 30, 40, 50],
+    'C': [100, 200, 300, 400, 500]
+})
+ 
+# 定义条件判断函数
+def condition_check(row,num_lst):
+    if int(row['A']) in num_lst:
+        return 'Condition met'
+    if row['A'] > 2 and row['B'] > 20:
+        return 'Condition met'
+    else:
+        return 'Condition not met'
+num_lst = [3,4,5]
+# 应用条件判断函数到DataFrame的Result列中
+df['Result'] = df.apply(condition_check,args=(num_lst,), axis=1)
+
+
+
+def condition_check_filter(row,num_lst):
+    if int(row['A']) in num_lst:
+        return True
+    if row['A'] > 2 and row['B'] > 20:
+        return True
+    else:
+        return False
+num_lst = [3,4,5]
+# 条件筛选符合条件的行
+new_df = df[df.apply(condition_check_filter,args=(num_lst,), axis=1)]
+
+####################### 多条件 apply ##########################
+
 # 使用isin()方法筛选
 df.loc[df['Item'].isin(['Milk', 'Bread'])]
 df[(df['级别'].isin (['一线','二线']))]
