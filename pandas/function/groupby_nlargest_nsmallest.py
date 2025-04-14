@@ -14,3 +14,6 @@ print(df)
 result = df.groupby('Group').apply(lambda x: x.nlargest(3, 'Value')).reset_index(drop=True)
 #x.nsmallest 最小的
 print(result)
+
+# 使用nlargest获取每组的前10条
+top10_per_group = df.groupby('Group', group_keys=False).apply(lambda x: x.nlargest(10, 'Value'))
