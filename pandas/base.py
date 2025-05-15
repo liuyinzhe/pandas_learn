@@ -259,7 +259,8 @@ df[df["date"].map(lambda x:x[0:4])=="2019"]
 df.loc[(df['Price'] < 2) | (df['Discount'] > 0)]
 
 df.loc[(df['Price'] > 3) | ((df['Discount'] > 0) & (df['Unit'] == 'Dozen'))]
-
+# 筛选行中0出现小于4次的内容
+df_filtered = counts_df[(counts_df == 0).sum(axis=1) < 4]
 ####################### 多条件 apply ##########################
 # 创建示例DataFrame
 df = pd.DataFrame({
